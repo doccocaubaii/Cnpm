@@ -50,7 +50,8 @@
 .heading {
     font-size: 2rem;
     color: black;
-    font-weight: 700;
+    font-weight: 400;
+    margin-bottom: 12px;
 }
 
 .btn-submit {
@@ -66,4 +67,8 @@
         background-color: blue;
         cursor: pointer;
     }
+}
+
+.readonly {
+    background-color: #f1f1f2;
 }

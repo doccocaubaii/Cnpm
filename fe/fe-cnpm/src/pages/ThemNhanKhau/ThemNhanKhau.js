@@ -16,12 +16,15 @@ function ThemNhanKhau() {
         });
         // gọi api
         axios
-            .post('https://jsonplaceholder.typicode.com/users', {
-                data,
-                name: 'thành',
-                email: 'Thành thật thà',
-                website: 'test',
-                phone: '123',
+            .post('http://localhost:8082/api/v1/nhankhau', {
+                maHoKhau: data.idhokue,
+                hoTen: data.name,
+                ngaySinh: data.date,
+                gioiTinh: data.gioTinh,
+                socmnd: data.cmnd,
+                quanHeVoiChuHo: data.quanhevochuho,
+                sdt: data.sdt,
+                isActive: 1,
             })
             .then((res) => {
                 // sửa phần gọi api
@@ -35,19 +38,19 @@ function ThemNhanKhau() {
     return (
         <div className={cx('main')}>
             <form id="create-form" className={cx('form')} onSubmit={handleSubmit}>
-                <h3 className={cx('heading')}>Thông tin hộ khẩu</h3>
+                <h3 className={cx('heading')}>Thông tin nhân khẩu</h3>
                 <div className={cx('form-group')}>
-                    <label htmlFor="id" className={cx('form-label')}>
-                        ID
+                    <label htmlFor="gioTinh" className={cx('form-label')}>
+                        Giới tính
                     </label>
-                    <input type="text" className={cx('form-control')} id="id" name="id" required />
+                    <input type="text" className={cx('form-control')} id="gioTinh" name="gioTinh" required />
                 </div>
 
                 <div className={cx('form-group')}>
                     <label htmlFor="name" className={cx('form-label')}>
                         Họ và tên
                     </label>
-                    <input type="text" className={cx('form-control')} id="name" name="name" required />
+                    <input type="text" className={cx('form-control')} gioTinh="name" name="name" required />
                 </div>
 
                 <div className={cx('form-group')}>

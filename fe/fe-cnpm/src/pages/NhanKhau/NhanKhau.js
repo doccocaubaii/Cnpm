@@ -12,7 +12,7 @@ function NhanKhau() {
     // gọi api thêm vào phần bảng
     useEffect(() => {
         axios
-            .get('https://jsonplaceholder.typicode.com/users')
+            .get('http://localhost:8082/api/v1/nhankhaus')
             .then((res) => {
                 setPeoples(res.data);
                 setCount(res.data.length);
@@ -32,14 +32,15 @@ function NhanKhau() {
             searchType,
         };
         axios
-            .post('https://jsonplaceholder.typicode.com/users', {
-                data,
-                name: 'thành',
-                email: 'Thành thật thà',
-                website: 'test',
-                phone: '123',
+            .get(`http://localhost:8082/api/v1/nhankhau?${data.searchType}=${data.inputValue}`)
+            .then((res) => {
+                console.log(res.data);
+                if (Array.isArray(res.data)) {
+                    setPeoples(res.data);
+                } else {
+                    setPeoples([res.data]);
+                }
             })
-            .then((res) => setPeoples([res.data]))
             .catch((err) => {
                 console.log(err);
             });
@@ -49,7 +50,7 @@ function NhanKhau() {
     const handDelete = (e) => {
         const id = e.target.getAttribute('data');
         axios
-            .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+            .delete(`http://localhost:8082/api/v1/nhankhau/${id}`)
             .then((res) => {
                 console.log(res);
             })
@@ -64,7 +65,7 @@ function NhanKhau() {
                 <select className={cx('search-select')} name="type" required>
                     <option value="">select</option>
                     <option value="id">ID</option>
-                    <option value="name">Họ tên</option>
+                    <option value="hoten">Họ tên</option>
                 </select>
                 <button className={cx('search-btn')}>Tìm Kiếm</button>
             </form>
@@ -93,10 +94,10 @@ function NhanKhau() {
                         {peoples.map((people) => (
                             <tr key={people.id}>
                                 <th scope="row">{people.id}</th>
-                                <td>{people.name}</td>
-                                <td>{people.phone}</td>
-                                <td>{people.email}</td>
-                                <td>@mdo{people.website}</td>
+                                <td>{people.hoTen}</td>
+                                <td>{people.ngaySinh}</td>
+                                <td>{people.gioiTinh}</td>
+                                <td>{people.diaChiHienNay}</td>
                                 <td>
                                     <Link className={cx('table-btn')} to={`/nhan-khau/sua/${people.id}`}>
                                         Sửa

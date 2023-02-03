@@ -26,6 +26,7 @@
     width: 100px;
 }
 
+.search-chuho,
 .form-control {
     flex: 1;
     height: 40px;
@@ -34,10 +35,10 @@
     border-radius: 3px;
     outline: none;
     font-size: 1.4rem;
-}
 
-.form-control:hover {
-    border-color: #1dbfaf;
+    &:hover {
+        border-color: #1dbfaf;
+    }
 }
 
 .wrapper {
@@ -67,4 +68,28 @@
         background-color: blue;
         cursor: pointer;
     }
+}
+
+.search-chuho {
+    display: flex;
+    text-align: center;
+}
+
+.form-control-search {
+    flex: 1;
+    border: none;
+    outline: none;
+}
+
+.icon-search {
+    width: 40px;
+    height: 32px;
+    margin-top: -4px;
+    border: none;
+    outline: none;
+    background-color: #fff;
+}
+
+.readonly {
+    background-color: #f1f1f2;
 }

@@ -1,13 +1,18 @@
+import classNames from 'classnames/bind';
+import styles from './SinhHoat.module.scss';
+
+const cx = classNames.bind(styles);
+
 function SinhHoat() {
     return (
-        <div
-            className="editable textview mce-content-body mce-edit-focus"
-            id="mce_0"
-            contentEditable="true"
-            style={{ position: 'relative' }}
-            spellCheck="false"
-        >
-            <div className="contentedit active hide">
+        <div className={cx('content')}>
+            <div
+                className={cx('content-edit')}
+                id="mce_0"
+                contentEditable="true"
+                style={{ position: 'relative' }}
+                spellCheck="false"
+            >
                 <table
                     style={{ width: '100%', borderCollapse: 'collapse' }}
                     border={0}
@@ -22,10 +27,7 @@ function SinhHoat() {
                                 data-mce-style="width: 50%; text-align: center;"
                             >
                                 <p>
-                                    <strong>TÊN CƠ QUAN</strong>
-                                </p>
-                                <p>
-                                    <strong>Số:……./CV</strong>
+                                    <strong>Tổ dân cư số 7</strong>
                                 </p>
                             </td>
                             <td
@@ -51,10 +53,10 @@ function SinhHoat() {
                 <p style={{ textAlign: 'center' }} data-mce-style="text-align: center;">
                     Kính gửi:.............................................
                 </p>
-                <p>Đến dự cuộc họp :……………………………(1)</p>
+                <p>Đến dự cuộc họp :……………………………</p>
                 <p>Địa điểm :…………………………………………</p>
                 <p>Thời gian :…………………………………………</p>
-                <p>Thủ trưởng cơ quan</p>
+                <p>Tổ trưởng tổ dân phố</p>
                 <table
                     style={{ width: '100%', borderCollapse: 'collapse' }}
                     border={0}
@@ -73,7 +75,11 @@ function SinhHoat() {
                                 style={{ width: '50%', textAlign: 'center' }}
                                 data-mce-style="width: 50%; text-align: center;"
                             >
-                                (Ký tên, đóng dấu)
+                                <p>(Ký tên, đóng dấu)</p>
+                                <p>
+                                    <strong>Thành</strong>
+                                </p>
+                                <strong>BÙI NGỌC THÀNH</strong>
                             </td>
                         </tr>
                     </tbody>

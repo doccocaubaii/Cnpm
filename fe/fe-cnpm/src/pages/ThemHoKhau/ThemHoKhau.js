@@ -1,10 +1,30 @@
 import classNames from 'classnames/bind';
 import styles from './ThemHoKhau.module.scss';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
 function ThemHoKhau() {
+    //hande seach chủ hộ
+    const handleSearchHouseholder = (e) => {
+        const inputValue = document.getElementById('maChuHo').value.trim();
+        if (inputValue) {
+            // gọi api
+            axios
+                .get(`https://jsonplaceholder.typicode.com/users/${inputValue}`)
+                .then((res) => {
+                    document.getElementById('name').value = res.data.name;
+                    document.getElementById('date').value = res.data.website;
+                    document.getElementById('cmnd').value = res.data.email;
+                    document.getElementById('sdt').value = res.data.phone;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
     // handle submit form
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -57,35 +77,46 @@ function ThemHoKhau() {
                         <label htmlFor="maChuHo" className={cx('form-label')}>
                             Mã chủ hộ
                         </label>
-                        <input type="text" className={cx('form-control')} id="maChuHo" name="maChuHo" required />
+                        <div className={cx('search-chuho')}>
+                            <input
+                                type="text"
+                                className={cx('form-control-search')}
+                                id="maChuHo"
+                                name="maChuHo"
+                                required
+                            />
+                            <button className={cx('icon-search')} onClick={handleSearchHouseholder}>
+                                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                            </button>
+                        </div>
                     </div>
 
                     <div className={cx('form-group')}>
                         <label htmlFor="name" className={cx('form-label')}>
                             Tên chủ hộ
                         </label>
-                        <input type="text" className={cx('form-control')} id="name" name="name" required />
+                        <input type="text" className={cx('form-control', 'readonly')} id="name" name="name" readOnly />
                     </div>
 
                     <div className={cx('form-group')}>
                         <label htmlFor="date" className={cx('form-label')}>
                             Ngày Sinh
                         </label>
-                        <input type="text" className={cx('form-control')} id="date" name="date" required />
+                        <input type="text" className={cx('form-control', 'readonly')} id="date" name="date" readOnly />
                     </div>
 
                     <div className={cx('form-group')}>
                         <label htmlFor="cmnd" className={cx('form-label')}>
                             Số CMND
                         </label>
-                        <input type="text" className={cx('form-control')} id="cmnd" name="cmnd" required />
+                        <input type="text" className={cx('form-control', 'readonly')} id="cmnd" name="cmnd" readOnly />
                     </div>
 
                     <div className={cx('form-group')}>
                         <label htmlFor="sdt" className={cx('form-label')}>
                             SĐT
                         </label>
-                        <input type="text" className={cx('form-control')} id="sdt" name="sdt" required />
+                        <input type="text" className={cx('form-control', 'readonly')} id="sdt" name="sdt" readOnly />
                     </div>
                 </div>
 

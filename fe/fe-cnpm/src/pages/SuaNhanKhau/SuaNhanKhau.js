@@ -13,8 +13,10 @@ function SuaNhanKhau() {
         const id = arr[arr.length - 1];
         // gọi api
         axios
-            .get(`https://jsonplaceholder.typicode.com/users/${id}`)
-            .then((res) => setPeople(res.data))
+            .get(`http://localhost:8082/api/v1/nhankhau?id=${id}`)
+            .then((res) => {
+                setPeople(res.data);
+            })
             .catch((err) => console.error(err));
     }, []);
     // handle submit form
@@ -28,12 +30,16 @@ function SuaNhanKhau() {
         });
         // gọi api
         axios
-            .put(`https://jsonplaceholder.typicode.com/users/${data.id}`, {
-                data,
-                name: 'thành',
-                email: 'Thành thật thà',
-                website: 'test',
-                phone: '123',
+            .put(`http://localhost:8082/api/v1/nhankhau`, {
+                id: data.id,
+                maHoKhau: data.idhokue,
+                hoTen: data.name,
+                ngaySinh: data.date,
+                gioiTinh: data.gioiTinh,
+                socmnd: data.cmnd,
+                quanHeVoiChuHo: data.quanhevochuho,
+                sdt: data.sdt,
+                isActive: 1,
             })
             .then((res) => {
                 // sửa phần gọi api
@@ -47,12 +53,19 @@ function SuaNhanKhau() {
     return (
         <div className={cx('main')}>
             <form id="create-form" className={cx('form')} onSubmit={handleSubmit}>
-                <h3 className={cx('heading')}>Thông tin hộ khẩu</h3>
+                <h3 className={cx('heading')}>Sửa thông tin nhân khẩu</h3>
                 <div className={cx('form-group')}>
                     <label htmlFor="id" className={cx('form-label')}>
                         ID
                     </label>
-                    <input type="text" className={cx('form-control')} id="id" name="id" value={people.id} readOnly />
+                    <input
+                        type="text"
+                        className={cx('form-control', 'readonly')}
+                        id="id"
+                        name="id"
+                        value={people.id}
+                        readOnly
+                    />
                 </div>
 
                 <div className={cx('form-group')}>
@@ -67,6 +80,13 @@ function SuaNhanKhau() {
                         Ngày Sinh
                     </label>
                     <input type="text" className={cx('form-control')} id="date" name="date" required />
+                </div>
+
+                <div className={cx('form-group')}>
+                    <label htmlFor="gioiTinh" className={cx('form-label')}>
+                        Giới tính
+                    </label>
+                    <input type="text" className={cx('form-control')} id="gioiTinh" name="gioiTinh" required />
                 </div>
 
                 <div className={cx('form-group')}>

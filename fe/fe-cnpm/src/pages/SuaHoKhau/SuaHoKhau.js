@@ -46,13 +46,20 @@ function SuaHoKhau() {
     return (
         <div className={cx('main')}>
             <form id="create-form" className={cx('form')} onSubmit={handleSubmit}>
-                <h3 className={cx('heading')}>Thông tin hộ khẩu</h3>
+                <h3 className={cx('heading')}>Sửa thông tin hộ khẩu</h3>
                 <div className={cx('wrapper')}>
                     <div className={cx('form-group')}>
                         <label htmlFor="id" className={cx('form-label')}>
                             Mã hộ khẩu
                         </label>
-                        <input type="text" className={cx('form-control')} id="id" name="id" value={hekou.id} readOnly />
+                        <input
+                            type="text"
+                            className={cx('form-control', 'readonly')}
+                            id="id"
+                            name="id"
+                            value={hekou.id}
+                            readOnly
+                        />
                     </div>
 
                     <div className={cx('form-group')}>
@@ -68,35 +75,41 @@ function SuaHoKhau() {
                         <label htmlFor="maChuHo" className={cx('form-label')}>
                             Mã chủ hộ
                         </label>
-                        <input type="text" className={cx('form-control')} id="maChuHo" name="maChuHo" required />
+                        <input
+                            type="text"
+                            className={cx('form-control', 'readonly')}
+                            id="maChuHo"
+                            name="maChuHo"
+                            readOnly
+                        />
                     </div>
 
                     <div className={cx('form-group')}>
                         <label htmlFor="name" className={cx('form-label')}>
                             Tên chủ hộ
                         </label>
-                        <input type="text" className={cx('form-control')} id="name" name="name" required />
+                        <input type="text" className={cx('form-control', 'readonly')} id="name" name="name" readOnly />
                     </div>
 
                     <div className={cx('form-group')}>
                         <label htmlFor="date" className={cx('form-label')}>
                             Ngày Sinh
                         </label>
-                        <input type="text" className={cx('form-control')} id="date" name="date" required />
+                        <input type="text" className={cx('form-control', 'readonly')} id="date" name="date" readOnly />
                     </div>
 
                     <div className={cx('form-group')}>
                         <label htmlFor="cmnd" className={cx('form-label')}>
                             Số CMND
                         </label>
-                        <input type="text" className={cx('form-control')} id="cmnd" name="cmnd" required />
+                        <input type="text" className={cx('form-control', 'readonly')} id="cmnd" name="cmnd" readOnly />
                     </div>
 
                     <div className={cx('form-group')}>
                         <label htmlFor="sdt" className={cx('form-label')}>
                             SĐT
                         </label>
-                        <input type="text" className={cx('form-control')} id="sdt" name="sdt" required />
+                        <input type="text" className={cx('form-control', 'readonly')} id="sdt" name="sdt" readOnly />
                     </div>
                 </div>
 
