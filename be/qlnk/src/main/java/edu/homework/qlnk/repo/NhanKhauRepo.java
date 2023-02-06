@@ -2,6 +2,7 @@ package edu.homework.qlnk.repo;
 
 import edu.homework.qlnk.repo.entity.NhanKhauEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,4 +19,7 @@ public interface NhanKhauRepo extends JpaRepository<NhanKhauEntity, Integer> {
     NhanKhauEntity findByIdAndIsActive(Integer id, Integer isActive);
 
     List<NhanKhauEntity> findByHoTenAndIsActive(String id, Integer isActive);
+
+    @Query(value = "SELECT COUNT(*) FROM nhan_khau nk WHERE nk.ma_ho_khau = ?1", nativeQuery = true )
+    Integer getSL(String mank);
 }

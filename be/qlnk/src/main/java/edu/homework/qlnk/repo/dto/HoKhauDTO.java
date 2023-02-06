@@ -7,6 +7,35 @@ public class HoKhauDTO {
     private String diaChi;
     private Integer isActive;
 
+    private Integer score;
+    private String tenChuHo;
+
+    private int slThanhVien;
+
+    public String getTenChuHo() {
+        return tenChuHo;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public void setTenChuHo(String tenChuHo) {
+        this.tenChuHo = tenChuHo;
+    }
+
+    public int getSlThanhVien() {
+        return slThanhVien;
+    }
+
+    public void setSlThanhVien(int slThanhVien) {
+        this.slThanhVien = slThanhVien;
+    }
+
     public Integer getId() {
         return this.id;
     }

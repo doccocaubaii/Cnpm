@@ -1,9 +1,10 @@
 package edu.homework.qlnk.repo.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 /**
- * This class was created at 1/30/2023 09:27:39
+ * This class was created at 2/6/2023 09:10:16
  *
  * @author Minh.LN
  */
@@ -17,6 +18,7 @@ public class HoKhauEntity {
     private String maHoKhau;
     private Integer idChuHo;
     private String diaChi;
+    private Integer score;
     private Integer isActive;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +63,16 @@ public class HoKhauEntity {
     }
 
     @Basic
+    @Column(name = "score")
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    @Basic
     @Column(name = "is_active")
     public Integer getIsActive() {
         return isActive;
@@ -78,6 +90,7 @@ public class HoKhauEntity {
         HoKhauEntity entity = (HoKhauEntity) o;
 
         if (id != entity.id) return false;
+        if (score != entity.score) return false;
         if (maHoKhau != null ? !maHoKhau.equals(entity.maHoKhau) : entity.maHoKhau != null) return false;
         if (idChuHo != null ? !idChuHo.equals(entity.idChuHo) : entity.idChuHo != null) return false;
         if (diaChi != null ? !diaChi.equals(entity.diaChi) : entity.diaChi != null) return false;
@@ -92,6 +105,7 @@ public class HoKhauEntity {
         result = 31 * result + (maHoKhau != null ? maHoKhau.hashCode() : 0);
         result = 31 * result + (idChuHo != null ? idChuHo.hashCode() : 0);
         result = 31 * result + (diaChi != null ? diaChi.hashCode() : 0);
+        result = 31 * result + score;
         result = 31 * result + (isActive != null ? isActive.hashCode() : 0);
         return result;
     }

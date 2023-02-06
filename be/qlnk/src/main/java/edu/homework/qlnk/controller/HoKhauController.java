@@ -41,6 +41,14 @@ public class HoKhauController {
         return hoKhauService.save(hoKhauDTO);
     }
 
+    @PutMapping("/hokhau/score/{maHoKhau}/{score}")
+    ResponseEntity<Object> score(@PathVariable("score") Integer score, @PathVariable("maHoKhau") String maHoKhau){
+        System.out.println(score);
+        System.out.println(maHoKhau);
+        Object o = hoKhauService.score(maHoKhau, score);
+        return ResponseEntity.ok().body(o);
+    }
+
     @PutMapping("/hokhau")
     ResponseEntity<Object> edit(@RequestBody HoKhauDTO hoKhauDTO){
         return hoKhauService.save(hoKhauDTO);
