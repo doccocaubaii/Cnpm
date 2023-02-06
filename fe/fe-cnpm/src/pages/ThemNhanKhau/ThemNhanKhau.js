@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './ThemNhanKhau.module.scss';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const cx = classNames.bind(styles);
 
@@ -27,10 +29,28 @@ function ThemNhanKhau() {
                 isActive: 1,
             })
             .then((res) => {
-                // sửa phần gọi api
-                console.log(res.data);
+                toast.success(' Thành công!', {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored',
+                });
             })
             .catch((err) => {
+                toast.error('Không thành công', {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored',
+                });
                 console.log(err);
             });
     };
@@ -39,18 +59,12 @@ function ThemNhanKhau() {
         <div className={cx('main')}>
             <form id="create-form" className={cx('form')} onSubmit={handleSubmit}>
                 <h3 className={cx('heading')}>Thông tin nhân khẩu</h3>
-                <div className={cx('form-group')}>
-                    <label htmlFor="gioTinh" className={cx('form-label')}>
-                        Giới tính
-                    </label>
-                    <input type="text" className={cx('form-control')} id="gioTinh" name="gioTinh" required />
-                </div>
 
                 <div className={cx('form-group')}>
                     <label htmlFor="name" className={cx('form-label')}>
                         Họ và tên
                     </label>
-                    <input type="text" className={cx('form-control')} gioTinh="name" name="name" required />
+                    <input type="text" className={cx('form-control')} id="name" name="name" required />
                 </div>
 
                 <div className={cx('form-group')}>
@@ -58,6 +72,13 @@ function ThemNhanKhau() {
                         Ngày Sinh
                     </label>
                     <input type="text" className={cx('form-control')} id="date" name="date" required />
+                </div>
+
+                <div className={cx('form-group')}>
+                    <label htmlFor="gioTinh" className={cx('form-label')}>
+                        Giới tính
+                    </label>
+                    <input type="text" className={cx('form-control')} id="gioTinh" name="gioTinh" required />
                 </div>
 
                 <div className={cx('form-group')}>
@@ -98,6 +119,8 @@ function ThemNhanKhau() {
                     Thêm nhân khẩu
                 </button>
             </form>
+
+            <ToastContainer />
         </div>
     );
 }

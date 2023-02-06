@@ -2,6 +2,8 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './NhanKhau.module.scss';
 const cx = classNames.bind(styles);
@@ -20,7 +22,7 @@ function NhanKhau() {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [count]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -42,6 +44,16 @@ function NhanKhau() {
                 }
             })
             .catch((err) => {
+                toast.error('có lỗi xảy ra', {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored',
+                });
                 console.log(err);
             });
     };
@@ -52,9 +64,21 @@ function NhanKhau() {
         axios
             .delete(`http://localhost:8082/api/v1/nhankhau/${id}`)
             .then((res) => {
-                console.log(res);
+                setCount(count - 1);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                toast.error(' xóa thất bại', {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored',
+                });
+                console.log(err);
+            });
     };
     return (
         <>
@@ -111,6 +135,8 @@ function NhanKhau() {
                     </tbody>
                 </table>
             </div>
+
+            <ToastContainer />
         </>
     );
 }

@@ -12,7 +12,7 @@ function HoKhau() {
     // gọi api thêm vào phần bảng
     useEffect(() => {
         axios
-            .get('https://jsonplaceholder.typicode.com/users')
+            .get('http://localhost:8082/api/v1/hokhaus')
             .then((res) => {
                 sethukous(res.data);
                 setCount(res.data.length);
@@ -95,7 +95,7 @@ function HoKhau() {
                                 <th scope="row">{hukou.id}</th>
                                 <td>{hukou.name}</td>
                                 <td>{hukou.phone}</td>
-                                <td>@mdo{hukou.website}</td>
+                                <td>@{hukou.diachi}</td>
                                 <td>
                                     <Link className={cx('table-btn')} to={`/ho-khau/sua/${hukou.id}`}>
                                         Sửa

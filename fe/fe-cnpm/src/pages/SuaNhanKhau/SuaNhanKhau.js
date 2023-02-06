@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 
 function SuaNhanKhau() {
+    const [inputvalue, setInputValue] = useState('');
     // render dữ liệu hiện tại của nhân khẩu
     const [people, setPeople] = useState({});
     useEffect(() => {
@@ -16,9 +17,16 @@ function SuaNhanKhau() {
             .get(`http://localhost:8082/api/v1/nhankhau?id=${id}`)
             .then((res) => {
                 setPeople(res.data);
+                setInputValue(res.data.hoTen);
             })
             .catch((err) => console.error(err));
     }, []);
+
+    //handle change input
+    const handleChangInput = (e) => {
+        setInputValue(e.target.value);
+        e.target.value = inputvalue;
+    };
     // handle submit form
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -72,7 +80,14 @@ function SuaNhanKhau() {
                     <label htmlFor="name" className={cx('form-label')}>
                         Họ và tên
                     </label>
-                    <input type="text" className={cx('form-control')} id="name" name="name" required />
+                    <input
+                        type="text"
+                        className={cx('form-control')}
+                        id="name"
+                        name="name"
+                        value={inputvalue}
+                        onChange={handleChangInput}
+                    />
                 </div>
 
                 <div className={cx('form-group')}>
