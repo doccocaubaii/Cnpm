@@ -1,0 +1,31 @@
+.content-edit {
+    width: 705px;
+    height: 450px;
+    padding: 20px;
+    border: 1.5px solid rgba(22, 24, 35, 0.3);
+    border-radius: 2px;
+    outline: none;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-print {
+    position: relative;
+    left: 90%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+
+    :hover {
+        opacity: 0.8;
+    }
+}
+
+.icon-print {
+    width: 25px;
+    height: 25px;
+    color: #000;
+}
