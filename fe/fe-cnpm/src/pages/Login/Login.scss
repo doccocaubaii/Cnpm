@@ -83,6 +83,7 @@
     width: 100%;
     font-size: 14px;
     border-radius: 8px;
+    margin-bottom: 3rem;
     cursor: pointer;
 }
 
@@ -92,4 +93,35 @@
 
 .spacer {
     margin-top: 36px;
+}
+
+.icon-group {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    + .icon {
+        margin-left: 1.5rem;
+    }
+
+    :hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+}
+
+.icon-facebook {
+    color: #3b5999;
+}
+
+.icon-twitter {
+    color: #1da1f3;
+}
+
+.icon-google {
+    color: #e94331;
 }

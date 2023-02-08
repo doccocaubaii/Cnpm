@@ -1,20 +1,23 @@
-.content-edit {
-    width: 705px;
-    height: 450px;
-    padding: 20px;
-    border: 1.5px solid rgba(22, 24, 35, 0.3);
-    border-radius: 2px;
+.add-minus-btn {
+    margin-left: 30px;
+    background-color: transparent;
     outline: none;
+    border: none;
+
+    :hover {
+        opacity: 0.8;
+        cursor: pointer;
+    }
 }
 
-.content {
-    display: flex;
-    justify-content: center;
+.icon-add {
+    width: 30px;
+    height: 20px;
 }
 
 .btn-print {
     position: relative;
-    left: 90%;
+    left: 100%;
     border: none;
     outline: none;
     background-color: transparent;

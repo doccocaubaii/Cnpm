@@ -3,6 +3,8 @@ import { useReactToPrint } from 'react-to-print';
 
 import classNames from 'classnames/bind';
 import styles from './SinhHoat.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPrint } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +16,10 @@ function SinhHoat() {
 
     return (
         <>
+            <button onClick={handlePrint} className={cx('btn-print')}>
+                <FontAwesomeIcon icon={faPrint} className={cx('icon-print')} />
+            </button>
+
             <div className={cx('content')} ref={componentRef}>
                 <div
                     className={cx('content-edit')}
@@ -95,7 +101,6 @@ function SinhHoat() {
                     </table>
                 </div>
             </div>
-            <button onClick={handlePrint}> print </button>
         </>
     );
 }

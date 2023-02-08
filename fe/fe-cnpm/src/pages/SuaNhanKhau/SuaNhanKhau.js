@@ -2,11 +2,24 @@ import classNames from 'classnames/bind';
 import styles from './SuaNhanKhau.module.scss';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function SuaNhanKhau() {
-    const [inputvalue, setInputValue] = useState('');
+    const navigate = useNavigate();
+    //state onchange input
+    const [name, setName] = useState('');
+    const [date, setDate] = useState('');
+    const [gioiTinh, setGioiTinh] = useState('');
+    const [cmnd, setCmnd] = useState('');
+    const [sdt, setSdt] = useState('');
+    const [idHokue, setIdHokue] = useState('');
+    const [address, setAddress] = useState('');
+    const [quanHeVoiChuHo, setQuanHeVoiChuHo] = useState('');
+
     // render dữ liệu hiện tại của nhân khẩu
     const [people, setPeople] = useState({});
     useEffect(() => {
@@ -17,43 +30,60 @@ function SuaNhanKhau() {
             .get(`http://localhost:8082/api/v1/nhankhau?id=${id}`)
             .then((res) => {
                 setPeople(res.data);
-                setInputValue(res.data.hoTen);
+                setName(res.data.hoTen);
+                setDate(res.data.ngaySinh);
+                setGioiTinh(res.data.gioiTinh);
+                setCmnd(res.data.socmnd);
+                setSdt(res.data.sdt);
+                setIdHokue(res.data.maHoKhau);
+                setAddress(res.data.diaChiHienNay);
+                setQuanHeVoiChuHo(res.data.quanHeVoiChuHo);
             })
             .catch((err) => console.error(err));
     }, []);
 
-    //handle change input
-    const handleChangInput = (e) => {
-        setInputValue(e.target.value);
-        e.target.value = inputvalue;
-    };
+    // function onchange two ways binding
+    const onChangeName = (e) => setName(e.target.value);
+    const onChangeDate = (e) => setDate(e.target.value);
+    const onChangeGioiTinh = (e) => setGioiTinh(e.target.value);
+    const onChangeCmnd = (e) => setCmnd(e.target.value);
+    const onChangeSdt = (e) => setSdt(e.target.value);
+    const onChangeIdHokue = (e) => setIdHokue(e.target.value);
+    const onChangeAddress = (e) => setAddress(e.target.value);
+    const onChangeQuanHeVoiChuHo = (e) => setQuanHeVoiChuHo(e.target.value);
+
     // handle submit form
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formElement = e.target;
-        const inputs = Object.values(formElement.querySelectorAll('input'));
-        const data = {};
-        inputs.forEach((input) => {
-            data[input.name] = input.value;
-        });
         // gọi api
         axios
             .put(`http://localhost:8082/api/v1/nhankhau`, {
-                id: data.id,
-                maHoKhau: data.idhokue,
-                hoTen: data.name,
-                ngaySinh: data.date,
-                gioiTinh: data.gioiTinh,
-                socmnd: data.cmnd,
-                quanHeVoiChuHo: data.quanhevochuho,
-                sdt: data.sdt,
+                id: people.id,
+                maHoKhau: idHokue,
+                hoTen: name,
+                ngaySinh: date,
+                gioiTinh: gioiTinh,
+                socmnd: cmnd,
+                quanHeVoiChuHo: quanHeVoiChuHo,
+                diaChiHienNay: address,
+                sdt: sdt,
                 isActive: 1,
             })
             .then((res) => {
-                // sửa phần gọi api
                 console.log(res.data);
+                navigate('/nhan-khau');
             })
             .catch((err) => {
+                toast.error('cập nhật thất bại', {
+                    position: 'top-right',
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored',
+                });
                 console.log(err);
             });
     };
@@ -85,8 +115,9 @@ function SuaNhanKhau() {
                         className={cx('form-control')}
                         id="name"
                         name="name"
-                        value={inputvalue}
-                        onChange={handleChangInput}
+                        value={name}
+                        onChange={onChangeName}
+                        required
                     />
                 </div>
 
@@ -94,35 +125,90 @@ function SuaNhanKhau() {
                     <label htmlFor="date" className={cx('form-label')}>
                         Ngày Sinh
                     </label>
-                    <input type="text" className={cx('form-control')} id="date" name="date" required />
+                    <input
+                        type="text"
+                        className={cx('form-control')}
+                        id="date"
+                        name="date"
+                        value={date}
+                        onChange={onChangeDate}
+                        required
+                    />
                 </div>
 
                 <div className={cx('form-group')}>
                     <label htmlFor="gioiTinh" className={cx('form-label')}>
                         Giới tính
                     </label>
-                    <input type="text" className={cx('form-control')} id="gioiTinh" name="gioiTinh" required />
+                    <input
+                        type="text"
+                        className={cx('form-control')}
+                        id="gioiTinh"
+                        name="gioiTinh"
+                        value={gioiTinh}
+                        onChange={onChangeGioiTinh}
+                        required
+                    />
                 </div>
 
                 <div className={cx('form-group')}>
                     <label htmlFor="cmnd" className={cx('form-label')}>
                         Số CMND
                     </label>
-                    <input type="text" className={cx('form-control')} id="cmnd" name="cmnd" required />
+                    <input
+                        type="text"
+                        className={cx('form-control')}
+                        id="cmnd"
+                        name="cmnd"
+                        value={cmnd}
+                        onChange={onChangeCmnd}
+                        required
+                    />
                 </div>
 
                 <div className={cx('form-group')}>
                     <label htmlFor="sdt" className={cx('form-label')}>
                         SĐT
                     </label>
-                    <input type="text" className={cx('form-control')} id="sdt" name="sdt" required />
+                    <input
+                        type="text"
+                        className={cx('form-control')}
+                        id="sdt"
+                        name="sdt"
+                        value={sdt}
+                        onChange={onChangeSdt}
+                        required
+                    />
                 </div>
 
                 <div className={cx('form-group')}>
                     <label htmlFor="idhokue" className={cx('form-label')}>
                         Mã hộ khẩu
                     </label>
-                    <input type="text" className={cx('form-control')} id="idhokue" name="idhokue" required />
+                    <input
+                        type="text"
+                        className={cx('form-control')}
+                        id="idhokue"
+                        name="idhokue"
+                        value={idHokue}
+                        onChange={onChangeIdHokue}
+                        required
+                    />
+                </div>
+
+                <div className={cx('form-group')}>
+                    <label htmlFor="address" className={cx('form-label')}>
+                        Địa chỉ hiện nay
+                    </label>
+                    <input
+                        type="text"
+                        className={cx('form-control')}
+                        id="address"
+                        name="address"
+                        value={address}
+                        onChange={onChangeAddress}
+                        required
+                    />
                 </div>
 
                 <div className={cx('form-group')}>
@@ -134,14 +220,17 @@ function SuaNhanKhau() {
                         className={cx('form-control')}
                         id="quanhevochuho"
                         name="quanhevochuho"
+                        value={quanHeVoiChuHo}
+                        onChange={onChangeQuanHeVoiChuHo}
                         required
                     />
                 </div>
 
                 <button type="submit" className={cx('btn-submit')}>
-                    Thêm nhân khẩu
+                    cập nhật
                 </button>
             </form>
+            <ToastContainer />
         </div>
     );
 }

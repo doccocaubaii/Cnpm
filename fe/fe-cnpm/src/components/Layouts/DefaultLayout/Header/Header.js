@@ -16,8 +16,11 @@ function Header() {
                     Hộ Khẩu
                 </Link>
                 <Link className={cx('link-btn')}>Thống kê</Link>
-                <Link className={cx('link-btn')} to="/sinh-hoat">
-                    Sinh Hoạt
+                <Link className={cx('link-btn')} to="/bieu-mau">
+                    Biểu mẫu
+                </Link>
+                <Link className={cx('link-btn')} to="/danh-gia">
+                    Đánh giá
                 </Link>
             </div>
         </header>

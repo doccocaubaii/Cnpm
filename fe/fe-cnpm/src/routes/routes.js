@@ -1,3 +1,4 @@
+import Diem from '~/pages/Diem';
 import HoKhau from '~/pages/HoKhau';
 import Login from '~/pages/Login';
 import NhanKhau from '~/pages/NhanKhau';
@@ -16,7 +17,8 @@ const publicRoutes = [
     { path: '/ho-khau/them-ho-khau', component: ThemHoKhau },
     { path: '/nhan-khau/sua/:id', component: SuaNhanKhau },
     { path: '/ho-khau/sua/:id', component: SuaHoKhau },
-    { path: '/sinh-hoat', component: SinhHoat },
+    { path: '/bieu-mau', component: SinhHoat },
+    { path: '/danh-gia', component: Diem },
 ];
 
 // private routes

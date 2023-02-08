@@ -36,7 +36,6 @@ function NhanKhau() {
         axios
             .get(`http://localhost:8082/api/v1/nhankhau?${data.searchType}=${data.inputValue}`)
             .then((res) => {
-                console.log(res.data);
                 if (Array.isArray(res.data)) {
                     setPeoples(res.data);
                 } else {
@@ -44,7 +43,7 @@ function NhanKhau() {
                 }
             })
             .catch((err) => {
-                toast.error('có lỗi xảy ra', {
+                toast.error('không có nhân khẩu', {
                     position: 'top-right',
                     autoClose: 5000,
                     hideProgressBar: false,

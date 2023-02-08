@@ -2,25 +2,37 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './HoKhau.module.scss';
 const cx = classNames.bind(styles);
 
 function HoKhau() {
-    const [hukous, sethukous] = useState([]);
+    const [hukous, setHukous] = useState([]);
     const [count, setCount] = useState(0);
     // gọi api thêm vào phần bảng
     useEffect(() => {
         axios
             .get('http://localhost:8082/api/v1/hokhaus')
             .then((res) => {
-                sethukous(res.data);
+                setHukous(res.data);
                 setCount(res.data.length);
             })
             .catch((err) => {
                 console.log(err);
+                toast.error('có lỗi xảy ra', {
+                    position: 'top-right',
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored',
+                });
             });
-    }, []);
+    }, [count]);
 
     // handle search data
     const handleSubmit = (e) => {
@@ -28,21 +40,27 @@ function HoKhau() {
         const formElement = e.target;
         const inputValue = formElement.querySelector('input').value;
         const searchType = formElement.querySelector('select').value;
-        const data = {
-            inputValue,
-            searchType,
-        };
         axios
-            .post('https://jsonplaceholder.typicode.com/users', {
-                data,
-                name: 'thành',
-                email: 'Thành thật thà',
-                website: 'test',
-                phone: '123',
+            .get(`http://localhost:8082/api/v1/hokhau?${searchType}=${inputValue}`)
+            .then((res) => {
+                if (Array.isArray(res.data)) {
+                    setHukous(res.data);
+                } else {
+                    setHukous([res.data]);
+                }
             })
-            .then((res) => sethukous([res.data]))
             .catch((err) => {
                 console.log(err);
+                toast.error('không tìm thấy', {
+                    position: 'top-right',
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored',
+                });
             });
     };
 
@@ -50,11 +68,23 @@ function HoKhau() {
     const handDelete = (e) => {
         const id = e.target.getAttribute('data');
         axios
-            .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+            .delete(`http://localhost:8082/api/v1/hokhau/${id}`)
             .then((res) => {
-                console.log(res);
+                setCount(count - 1);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                toast.error('xóa thất bại', {
+                    position: 'top-right',
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored',
+                });
+                console.log(err);
+            });
     };
     return (
         <>
@@ -65,7 +95,7 @@ function HoKhau() {
                 <select className={cx('search-select')} name="type" required>
                     <option value="">select</option>
                     <option value="id">ID</option>
-                    <option value="name">tên chủ hộ</option>
+                    <option value="maHoKhau">Mã hộ khẩu</option>
                 </select>
                 <button className={cx('search-btn')}>Tìm Kiếm</button>
             </form>
@@ -82,6 +112,7 @@ function HoKhau() {
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">Mã hộ khẩu</th>
                             <th scope="col">Tên chủ hộ</th>
                             <th scope="col">Số Thành viên</th>
                             <th scope="col" colSpan={2}>
@@ -93,9 +124,10 @@ function HoKhau() {
                         {hukous.map((hukou) => (
                             <tr key={hukou.id}>
                                 <th scope="row">{hukou.id}</th>
-                                <td>{hukou.name}</td>
-                                <td>{hukou.phone}</td>
-                                <td>@{hukou.diachi}</td>
+                                <th scope="row">{hukou.maHoKhau}</th>
+                                <td>{hukou.tenChuHo}</td>
+                                <td>{hukou.slThanhVien}</td>
+                                <td>{hukou.diaChi}</td>
                                 <td>
                                     <Link className={cx('table-btn')} to={`/ho-khau/sua/${hukou.id}`}>
                                         Sửa
@@ -109,6 +141,7 @@ function HoKhau() {
                     </tbody>
                 </table>
             </div>
+            <ToastContainer />
         </>
     );
 }
