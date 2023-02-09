@@ -12,6 +12,7 @@
     align-items: center;
 }
 
+.logout-btn,
 .link-btn {
     outline: none;
     border: none;
@@ -39,4 +40,8 @@
         background-color: #fff;
         color: #343a40;
     }
+}
+
+.logout-btn {
+    margin-left: 600px;
 }

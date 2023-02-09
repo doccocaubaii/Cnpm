@@ -78,7 +78,7 @@ function SuaHoKhau() {
                 maHoKhau: hekou.maHoKhau,
                 idChuHo: hekou.idChuHo,
                 diaChi: inputValue,
-                score: 1,
+                score: hekou.score,
                 isActive: 1,
             })
             .then((res) => {

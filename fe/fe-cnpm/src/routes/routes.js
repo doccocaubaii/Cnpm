@@ -9,8 +9,10 @@ import ThemHoKhau from '~/pages/ThemHoKhau';
 import ThemNhanKhau from '~/pages/ThemNhanKhau';
 
 //public routes
-const publicRoutes = [
-    { path: '/', component: Login, layout: null },
+const publicRoutes = [{ path: '/', component: Login, layout: null }];
+
+// private routes
+const privateRoutes = [
     { path: '/nhan-khau', component: NhanKhau },
     { path: '/ho-khau', component: HoKhau },
     { path: '/nhan-khau/them-nhan-khau', component: ThemNhanKhau },
@@ -20,8 +22,5 @@ const publicRoutes = [
     { path: '/bieu-mau', component: SinhHoat },
     { path: '/danh-gia', component: Diem },
 ];
-
-// private routes
-const privateRoutes = [];
 
 export { privateRoutes, publicRoutes };

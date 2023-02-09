@@ -30,52 +30,64 @@ function ThemNhanKhau() {
     // handle submit form
     const handleSubmit = (e) => {
         e.preventDefault();
-        // gọi api
-        axios
-            .post('http://localhost:8082/api/v1/nhankhau', {
-                maHoKhau: idHokue,
-                hoTen: name,
-                ngaySinh: date,
-                gioiTinh: gioTinh,
-                socmnd: cmnd,
-                quanHeVoiChuHo: quanHeVoiChuHo,
-                sdt: sdt,
-                diaChiHienNay: address,
-                isActive: 1,
-            })
-            .then((res) => {
-                toast.success(' Thành công!', {
-                    position: 'top-right',
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: 'colored',
-                });
-                setName('');
-                setDate('');
-                setGioTinh('');
-                setCmnd('');
-                setSdt('');
-                setIdHokue('');
-                setAddress('');
-                setQuanHeVoiChuHo('');
-            })
-            .catch((err) => {
-                toast.error('Không thành công', {
-                    position: 'top-right',
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: 'colored',
-                });
-                console.log(err);
+        if (gioTinh === 'chọn giới tính' || gioTinh === '') {
+            toast.error('yêu cầu chọn giới tính', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored',
             });
+        } else {
+            axios
+                .post('http://localhost:8082/api/v1/nhankhau', {
+                    maHoKhau: idHokue,
+                    hoTen: name,
+                    ngaySinh: date,
+                    gioiTinh: gioTinh,
+                    socmnd: cmnd,
+                    quanHeVoiChuHo: quanHeVoiChuHo,
+                    sdt: sdt,
+                    diaChiHienNay: address,
+                    isActive: 1,
+                })
+                .then((res) => {
+                    toast.success(' Thành công!', {
+                        position: 'top-right',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'colored',
+                    });
+                    setName('');
+                    setDate('');
+                    setGioTinh('');
+                    setCmnd('');
+                    setSdt('');
+                    setIdHokue('');
+                    setAddress('');
+                    setQuanHeVoiChuHo('');
+                })
+                .catch((err) => {
+                    toast.error('Không thành công', {
+                        position: 'top-right',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'colored',
+                    });
+                    console.log(err);
+                });
+        }
     };
 
     return (
@@ -103,7 +115,7 @@ function ThemNhanKhau() {
                         Ngày Sinh
                     </label>
                     <input
-                        type="text"
+                        type="date"
                         className={cx('form-control')}
                         id="date"
                         name="date"
@@ -117,15 +129,19 @@ function ThemNhanKhau() {
                     <label htmlFor="gioTinh" className={cx('form-label')}>
                         Giới tính
                     </label>
-                    <input
-                        type="text"
+                    <select
                         className={cx('form-control')}
                         id="gioTinh"
                         name="gioTinh"
                         value={gioTinh}
                         onChange={onChangeGioTinh}
                         required
-                    />
+                    >
+                        <option value="chọn giới tính">Chọn giới tính</option>
+                        <option value="nam">Nam</option>
+                        <option value="nữ">Nữ</option>
+                        <option value="khác">Khác</option>
+                    </select>
                 </div>
 
                 <div className={cx('form-group')}>

@@ -108,6 +108,7 @@ function NhanKhau() {
                             <th scope="col">Họ tên</th>
                             <th scope="col">Ngày Sinh</th>
                             <th scope="col">Giới tính</th>
+                            <th scope="col">Mã hộ khẩu</th>
                             <th scope="col" colSpan={2}>
                                 Địa chỉ hiện nay
                             </th>
@@ -120,6 +121,7 @@ function NhanKhau() {
                                 <td>{people.hoTen}</td>
                                 <td>{people.ngaySinh}</td>
                                 <td>{people.gioiTinh}</td>
+                                <td>{people.maHoKhau}</td>
                                 <td>{people.diaChiHienNay}</td>
                                 <td>
                                     <Link className={cx('table-btn')} to={`/nhan-khau/sua/${people.id}`}>

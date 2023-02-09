@@ -1,4 +1,4 @@
-import { faPlusMinus, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faPrint, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
@@ -11,8 +11,29 @@ import styles from './Diem.module.scss';
 const cx = classNames.bind(styles);
 
 function Diem() {
-    // end handle modal
+    // state save modal
+    const [hide, setHide] = useState(false);
+
+    // state onchange input modal
+    const [idHukouModal, setIdHukouModal] = useState('');
+    const [scoreModal, setScoreModal] = useState(0);
+    // onchange input modal
+    const onChangeidHukouModal = (e) => setIdHukouModal(e.target.value);
+    const onChangeScoreModal = (e) => setScoreModal(e.target.value);
+
     const [hukous, setHukous] = useState([]);
+    const toastErr = (message) => {
+        toast.error('message', {
+            position: 'top-right',
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        });
+    };
     // gọi api thêm vào phần bảng
     useEffect(() => {
         axios
@@ -21,29 +42,37 @@ function Diem() {
                 setHukous(res.data);
             })
             .catch((err) => {
+                toastErr('có lỗi xảy ra');
                 console.log(err);
-                toast.error('có lỗi xảy ra', {
-                    position: 'top-right',
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: 'colored',
-                });
             });
-    }, []);
+    }, [hide]);
+
+    //handle hideModal
+    const handleHideModalBtn = (e) => {
+        setHide(true);
+        setIdHukouModal(e.target.getAttribute('data'));
+    };
+
+    //  handle HiddenModal
+    const handleHiddenModal = () => setHide(false);
 
     //handle update score
     const handleUpdateScore = (e) => {
-        const maHoKhau = e.target.getAttribute('data');
-        console.log(maHoKhau);
+        const arrIdHukou = idHukouModal.split(',');
+        const length = arrIdHukou.length;
+        arrIdHukou.forEach(async (idHukou, index) => {
+            idHukou = idHukou.trim();
 
-        axios
-            .put(`http://localhost:8082/api/v1/hokhau/score/${maHoKhau}/1`)
-            .then((res) => console.log(res.data))
-            .catch((err) => console.log(err));
+            await axios
+                .put(`http://localhost:8082/api/v1/hokhau/score/${idHukou}/${scoreModal}`)
+                .then((res) => {
+                    if (index === length - 1) setHide(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    toastErr(` hộ khẩu ${idHukou} không thành công`);
+                });
+        });
     };
 
     // xủ lí print
@@ -54,11 +83,16 @@ function Diem() {
 
     return (
         <>
-            <button onClick={handlePrint} className={cx('btn-print')}>
-                <FontAwesomeIcon icon={faPrint} className={cx('icon-print')} />
-            </button>
+            <div className={cx('print-update')}>
+                <h3 className={cx('update-score-s')} onClick={handleHideModalBtn}>
+                    sửa nhiều hộ
+                </h3>
+                <button onClick={handlePrint} className={cx('btn-print')}>
+                    <FontAwesomeIcon icon={faPrint} className={cx('icon-print')} />
+                </button>
+            </div>
 
-            <div className="mt-4" ref={componentRef}>
+            <div className={cx('wrapper')} ref={componentRef}>
                 <table className="table">
                     <thead>
                         <tr>
@@ -76,12 +110,13 @@ function Diem() {
                                 <td>{hukou.tenChuHo}</td>
                                 <td>
                                     {hukou.score}
-                                    <button className={cx('add-minus-btn')} onClick={handleUpdateScore}>
-                                        <FontAwesomeIcon
-                                            icon={faPlusMinus}
-                                            className={cx('icon-add')}
-                                            data={hukou.maHoKhau}
-                                        />
+
+                                    <button
+                                        className={cx('add-minus-btn')}
+                                        onClick={handleHideModalBtn}
+                                        data={hukou.maHoKhau}
+                                    >
+                                        chỉnh sửa
                                     </button>
                                 </td>
                             </tr>
@@ -90,6 +125,49 @@ function Diem() {
                 </table>
             </div>
             <ToastContainer />
+            {hide && (
+                <div className={cx('main-modal')}>
+                    <div className={cx('wrapper-form')}>
+                        <button className={cx('close-btn')} onClick={handleHiddenModal}>
+                            <FontAwesomeIcon icon={faXmark} className={cx('close-icon')} />
+                        </button>
+                        <div className={cx('form-group')}>
+                            <label htmlFor="idHukou" className={cx('form-label')}>
+                                Mã hộ khẩu
+                            </label>
+                            <input
+                                type="text"
+                                className={cx('form-control')}
+                                id="idHukou"
+                                name="idHukou"
+                                value={idHukouModal}
+                                placeholder="VD: abc, xyz"
+                                onChange={onChangeidHukouModal}
+                                required
+                            />
+                        </div>
+
+                        <div className={cx('form-group')}>
+                            <label htmlFor="address" className={cx('form-label')}>
+                                điểm thay đổi
+                            </label>
+                            <input
+                                type="number"
+                                className={cx('form-control')}
+                                id="address"
+                                name="address"
+                                value={scoreModal}
+                                onChange={onChangeScoreModal}
+                                required
+                            />
+                        </div>
+
+                        <button className={cx('save-btn')} onClick={handleUpdateScore}>
+                            lưu lại
+                        </button>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

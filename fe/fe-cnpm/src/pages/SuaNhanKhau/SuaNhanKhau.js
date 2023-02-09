@@ -55,37 +55,50 @@ function SuaNhanKhau() {
     // handle submit form
     const handleSubmit = (e) => {
         e.preventDefault();
-        // gọi api
-        axios
-            .put(`http://localhost:8082/api/v1/nhankhau`, {
-                id: people.id,
-                maHoKhau: idHokue,
-                hoTen: name,
-                ngaySinh: date,
-                gioiTinh: gioiTinh,
-                socmnd: cmnd,
-                quanHeVoiChuHo: quanHeVoiChuHo,
-                diaChiHienNay: address,
-                sdt: sdt,
-                isActive: 1,
-            })
-            .then((res) => {
-                console.log(res.data);
-                navigate('/nhan-khau');
-            })
-            .catch((err) => {
-                toast.error('cập nhật thất bại', {
-                    position: 'top-right',
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: 'colored',
-                });
-                console.log(err);
+        if (gioiTinh === 'chọn giới tính' || gioiTinh === '') {
+            toast.error('yêu cầu chọn giới tính', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored',
             });
+        } else {
+            // gọi api
+            axios
+                .put(`http://localhost:8082/api/v1/nhankhau`, {
+                    id: people.id,
+                    maHoKhau: idHokue,
+                    hoTen: name,
+                    ngaySinh: date,
+                    gioiTinh: gioiTinh,
+                    socmnd: cmnd,
+                    quanHeVoiChuHo: quanHeVoiChuHo,
+                    diaChiHienNay: address,
+                    sdt: sdt,
+                    isActive: 1,
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    navigate('/nhan-khau');
+                })
+                .catch((err) => {
+                    toast.error('cập nhật thất bại', {
+                        position: 'top-right',
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'colored',
+                    });
+                    console.log(err);
+                });
+        }
     };
 
     return (
@@ -126,7 +139,7 @@ function SuaNhanKhau() {
                         Ngày Sinh
                     </label>
                     <input
-                        type="text"
+                        type="date"
                         className={cx('form-control')}
                         id="date"
                         name="date"
@@ -140,15 +153,19 @@ function SuaNhanKhau() {
                     <label htmlFor="gioiTinh" className={cx('form-label')}>
                         Giới tính
                     </label>
-                    <input
-                        type="text"
+                    <select
                         className={cx('form-control')}
                         id="gioiTinh"
                         name="gioiTinh"
                         value={gioiTinh}
                         onChange={onChangeGioiTinh}
                         required
-                    />
+                    >
+                        <option value="chọn giới tính">Chọn giới tính</option>
+                        <option value="nam">Nam</option>
+                        <option value="nữ">Nữ</option>
+                        <option value="khác">Khác</option>
+                    </select>
                 </div>
 
                 <div className={cx('form-group')}>
