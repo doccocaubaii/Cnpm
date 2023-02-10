@@ -117,7 +117,7 @@ function HoKhau() {
 
             {undo && (
                 <h3 className={cx('undo-all-people')} onClick={handleUndoAllHukou}>
-                    Tất cả nhân khẩu
+                    Tất cả hộ khẩu
                 </h3>
             )}
 
