@@ -63,7 +63,19 @@ function ThemHoKhau() {
                 isActive: 1,
             })
             .then((res) => {
-                // sửa phần gọi api
+                toast.success('Thành công', {
+                    position: 'top-right',
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored',
+                });
+                setIdHukou('');
+                setAddress('');
+                setIdChuHo('');
                 console.log(res.data);
             })
             .catch((err) => {
