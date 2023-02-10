@@ -170,7 +170,6 @@ function ThemNhanKhau() {
                         name="sdt"
                         value={sdt}
                         onChange={onChangeSdt}
-                        required
                     />
                 </div>
 

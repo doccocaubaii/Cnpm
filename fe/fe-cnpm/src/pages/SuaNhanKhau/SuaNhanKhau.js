@@ -161,7 +161,6 @@ function SuaNhanKhau() {
                         onChange={onChangeGioiTinh}
                         required
                     >
-                        <option value="chọn giới tính">Chọn giới tính</option>
                         <option value="nam">Nam</option>
                         <option value="nữ">Nữ</option>
                         <option value="khác">Khác</option>
@@ -194,7 +193,6 @@ function SuaNhanKhau() {
                         name="sdt"
                         value={sdt}
                         onChange={onChangeSdt}
-                        required
                     />
                 </div>
 

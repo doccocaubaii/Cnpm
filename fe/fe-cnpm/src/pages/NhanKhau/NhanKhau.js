@@ -11,6 +11,7 @@ const cx = classNames.bind(styles);
 function NhanKhau() {
     const [peoples, setPeoples] = useState([]);
     const [count, setCount] = useState(0);
+    const [undo, setUndo] = useState(false);
     // gọi api thêm vào phần bảng
     useEffect(() => {
         axios
@@ -23,6 +24,10 @@ function NhanKhau() {
                 console.log(err);
             });
     }, [count]);
+    const handleUndoPeople = (e) => {
+        setUndo(false);
+        setCount(count - 1);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,6 +46,7 @@ function NhanKhau() {
                 } else {
                     setPeoples([res.data]);
                 }
+                setUndo(true);
             })
             .catch((err) => {
                 toast.error('không có nhân khẩu', {
@@ -99,6 +105,11 @@ function NhanKhau() {
                     Thêm nhân khẩu
                 </Link>
             </div>
+            {undo && (
+                <h3 className={cx('undo-all-people')} onClick={handleUndoPeople}>
+                    Tất cả nhân khẩu
+                </h3>
+            )}
 
             <div className="mt-4">
                 <table className="table">

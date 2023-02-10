@@ -67,3 +67,13 @@
 .add-link {
     margin-left: 16px;
 }
+
+.undo-all-people {
+    margin-top: 8px;
+    color: blue;
+}
+
+.undo-all-people:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

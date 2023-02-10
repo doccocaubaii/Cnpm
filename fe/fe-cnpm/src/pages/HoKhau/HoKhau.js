@@ -11,6 +11,7 @@ const cx = classNames.bind(styles);
 function HoKhau() {
     const [hukous, setHukous] = useState([]);
     const [count, setCount] = useState(0);
+    const [undo, setUndo] = useState(false);
     // gọi api thêm vào phần bảng
     useEffect(() => {
         axios
@@ -34,6 +35,12 @@ function HoKhau() {
             });
     }, [count]);
 
+    //handle undo all
+    const handleUndoAllHukou = (e) => {
+        setUndo(false);
+        setCount(count - 1);
+    };
+
     // handle search data
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -48,6 +55,7 @@ function HoKhau() {
                 } else {
                     setHukous([res.data]);
                 }
+                setUndo(true);
             })
             .catch((err) => {
                 console.log(err);
@@ -106,6 +114,12 @@ function HoKhau() {
                     Thêm hộ khẩu
                 </Link>
             </div>
+
+            {undo && (
+                <h3 className={cx('undo-all-people')} onClick={handleUndoAllHukou}>
+                    Tất cả nhân khẩu
+                </h3>
+            )}
 
             <div className="mt-4">
                 <table className="table">
