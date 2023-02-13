@@ -55,6 +55,7 @@ function Login() {
                         className="form-control"
                         value={email}
                         onChange={onChangeEmail}
+                        required
                     />
                     <span className="form-message" />
                 </div>
@@ -71,6 +72,7 @@ function Login() {
                         className="form-control"
                         value={password}
                         onChange={onChangePassword}
+                        required
                     />
                     <span className="form-message" />
                 </div>
